@@ -11,7 +11,7 @@ enum RPNExpressions {
 export default class RPN {
   readonly RPNeq: [string | number, RPNExpressions][] = []; // Array containing the equation in RPN format
   static readonly numberR = "[0-9]*\\.?[0-9]+(?:[eE][\\-\\+]?[0-9]+)?";
-  static readonly variableR = "(?<![0-9])([a-zA-Z0-9]+)(_[a-zA-Z0-9]+)?";
+  static readonly variableR = "(?<![0-9])([a-zA-Z0-9']+)(_[a-zA-Z0-9']+)?";
   static readonly unitR = "(?:[a-zA-Z0-9\\+\\-\\/\\*\\^]+)?";
   static readonly operationR = "[\\+\\-*\\/\\^\\-]";
   static readonly functionR = "sqrt|abs|exp|ln|log2|log10";
