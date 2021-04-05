@@ -14,8 +14,8 @@ export default class RPN {
   static readonly variableR = "(?<![0-9])([a-zA-Z0-9']+)(_[a-zA-Z0-9']+)?";
   static readonly unitR = "(?:[a-zA-Z0-9\\+\\-\\/\\*\\^]+)?";
   static readonly operationR = "[\\+\\-*\\/\\^\\-]";
-  static readonly functionR = "sqrt|abs|exp|ln|log2|log10";
-  static readonly trigonometryR = "a?(?:sin|cos|tg|ctg)h?r?";
+  static readonly functionR = "sqrt|abs|exp|ln|log2|log10|log";
+  static readonly trigonometryR = "a?(?:sin|cos|tan|cot|tg|ctg)h?r?";
   static readonly operations: { [key: string]: number } = {
     "+": 1,
     "-": 1,
@@ -29,6 +29,7 @@ export default class RPN {
     abs: Math.abs,
     ln: Math.log,
     log2: Math.log2,
+    log10: Math.log10,
     log: Math.log10,
     sin: Math.sin,
     sinh: Math.sinh,
@@ -38,6 +39,16 @@ export default class RPN {
     cosh: Math.cosh,
     acos: Math.acos,
     acosh: Math.acosh,
+    tan: Math.tan,
+    tanh: Math.tanh,
+    atan: Math.atan,
+    atanh: Math.atanh,
+    cot: (v: number) => Math.cos(v) / Math.sin(v),
+    coth: (v: number) => Math.cosh(v) / Math.sinh(v),
+    acot: (v: number) => Math.PI / 2 - Math.atan(v),
+    acoth: (v: number) => Math.log(Math.sqrt((v + 1) / (v - 1))),
+
+    // polish version
     tg: Math.tan,
     tgh: Math.tanh,
     atg: Math.atan,
