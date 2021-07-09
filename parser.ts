@@ -63,7 +63,7 @@ export default class RPN {
     this.RPNeq = RPN.convert(extracted);
   }
   static type(exp: string | number): RPNExpressions {
-    const a  = RPNExpressions.Whitespace;
+    const _a = RPNExpressions.Whitespace;
     if (
       typeof exp === "number" ||
       RegExp(`^(${RPN.numberR})$`).test(exp)
@@ -157,7 +157,8 @@ export default class RPN {
           beginning = true;
         }
       } else if (
-        exp[1] === RPNExpressions.Function || exp[1] === RPNExpressions.Trigonometry
+        exp[1] === RPNExpressions.Function ||
+        exp[1] === RPNExpressions.Trigonometry
       ) {
         nestedFunctions[level] = exp;
       } else {
