@@ -63,7 +63,6 @@ export default class RPN {
     this.RPNeq = RPN.convert(extracted);
   }
   static type(exp: string | number): RPNExpressions {
-    const _a = RPNExpressions.Whitespace;
     if (
       typeof exp === "number" ||
       RegExp(`^(${RPN.numberR})$`).test(exp)
@@ -183,7 +182,7 @@ export default class RPN {
   }
   // calculates this.RPNeq and returns the value
   // RPN { ONPeq: ["10", "0", "6", "-",  "4", "2", "^",  "+", "(", "*"] } -> 100
-  calculate(variables: { [key: string]: number }): number {
+  calculate(variables: { [key: string]: number | undefined }): number {
     const stack: number[] = [];
     for (const [exp, type] of this.RPNeq) {
       let v: number | null = null;
@@ -192,13 +191,9 @@ export default class RPN {
       } else if (type === RPNExpressions.Number) {
         v = parseFloat(exp);
       } else if (type === RPNExpressions.Variable) {
-        if (exp in variables) {
-          v = variables[exp];
-        } else {
-          throw new Error(
-            "INVALID EQUATION, UNDECLARED VARIABLE",
-          );
-        }
+        const u = variables[exp];
+        if (exp in variables && u !== undefined) v = u;
+        else throw new Error("INVALID EQUATION, UNDECLARED VARIABLE");
       } else if (type === RPNExpressions.Operation) {
         if (stack.length < 2) {
           throw new Error(
